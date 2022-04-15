@@ -11,7 +11,7 @@ volume = 0.5
 fs = 44100
 duration = 2
 
-for n in range(11,99):
+for n in range(11,49):
 	f = 500*np.sqrt(np.cos(2*n)**2 + np.cos(n)**2)
 
 	print(n)
