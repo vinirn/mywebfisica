@@ -11,7 +11,7 @@ volume = 0.5
 fs = 44100
 duration = 2
 
-for n in range(11,49):
+for n in range(25,37):
 	f1 = n*10;
 	f2 = n*15;
 	#if f1<100:
@@ -27,8 +27,8 @@ for n in range(11,49):
 	print(str(f1) + ' Hz')
 	print(str(f2) + ' Hz')
 
-	samples = np.sin(2*np.pi*np.arange(fs*duration) * f1/fs) +\
-			  np.sin(2*np.pi*np.arange(fs*duration) * f2/fs)
+	samples = 2*np.sin(2*np.pi*np.arange(fs*duration) * f1/fs) +\
+			  1*np.sin(2*np.pi*np.arange(fs*duration) * f2/fs)
 	samples = samples.astype(np.float32)
 
 	scaled = np.int16(samples/np.max(np.abs(samples)) * 32767)
