@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pêndulo Simples</title>
+</head>
+<body>
+    <canvas id="pendulo" width="800" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById('pendulo');
+        const ctx = canvas.getContext('2d');
+
+        // Propriedades do pêndulo
+        const comprimento = 200; // comprimento do braço do pêndulo
+        let angulo = 0.5; // ângulo inicial
+        const aceleracaoGravidade = 0.4; // aceleração da gravidade
+        let velocidade = 0; // velocidade inicial
+
+        function desenhar() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // limpa o canvas
+
+            // Calcula a posição da extremidade do pêndulo
+            const x = canvas.width / 2 + comprimento * Math.sin(angulo);
+            const y = comprimento * Math.cos(angulo);
+
+            // Desenha o braço do pêndulo
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, 0);
+            ctx.lineTo(x, y);
+            ctx.lineWidth = 5;
+            ctx.stroke();
+
+            // Desenha a massa do pêndulo
+            ctx.beginPath();
+            ctx.arc(x, y, 20, 0, 2 * Math.PI);
+            ctx.fillStyle = 'blue';
+            ctx.fill();
+
+            // Calcula a aceleração e a velocidade
+            const aceleracao = -(aceleracaoGravidade / comprimento) * Math.sin(angulo);
+            velocidade += aceleracao;
+            angulo += velocidade;
+
+            // Aplica um amortecimento
+            //velocidade *= 0.99;
+
+            requestAnimationFrame(desenhar);
+        }
+
+        // Inicia a animação
+        desenhar();
+    </script>
+</body>
+</html>
