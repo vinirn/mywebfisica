@@ -12,17 +12,25 @@
         const ctx = canvas.getContext('2d');
 
         // Propriedades do pêndulo
-        const comprimento = 200; // comprimento do braço do pêndulo
-        let angulo = 0.5; // ângulo inicial
-        const aceleracaoGravidade = 0.4; // aceleração da gravidade
-        let velocidade = 0; // velocidade inicial
+        const comprimentoMetros = 3.5; // comprimento do braço do pêndulo em metros
+        const comprimentoPixels = comprimentoMetros * 100; // comprimento em pixels (1 metro = 100 pixels)
+        const anguloInicial = 0.5; // ângulo inicial
+        const aceleracaoGravidade = 9.8; // aceleração da gravidade em m/s²
+        const periodo = 2 * Math.PI * Math.sqrt(comprimentoMetros / aceleracaoGravidade); // período do pêndulo
+
+        let angulo = anguloInicial;
+        let tempo = 0;
+        const deltaTime = 0.016; // 60 frames por segundo
 
         function desenhar() {
             ctx.clearRect(0, 0, canvas.width, canvas.height); // limpa o canvas
 
+            // Calcula a posição do pêndulo usando a solução exata para um pêndulo simples
+            angulo = anguloInicial * Math.cos(Math.sqrt(aceleracaoGravidade / comprimentoMetros) * tempo);
+
             // Calcula a posição da extremidade do pêndulo
-            const x = canvas.width / 2 + comprimento * Math.sin(angulo);
-            const y = comprimento * Math.cos(angulo);
+            const x = canvas.width / 2 + comprimentoPixels * Math.sin(angulo);
+            const y = comprimentoPixels * Math.cos(angulo);
 
             // Desenha o braço do pêndulo
             ctx.beginPath();
@@ -37,13 +45,8 @@
             ctx.fillStyle = 'blue';
             ctx.fill();
 
-            // Calcula a aceleração e a velocidade
-            const aceleracao = -(aceleracaoGravidade / comprimento) * Math.sin(angulo);
-            velocidade += aceleracao;
-            angulo += velocidade;
-
-            // Aplica um amortecimento
-            //velocidade *= 0.99;
+            // Incrementa o tempo
+            tempo += deltaTime;
 
             requestAnimationFrame(desenhar);
         }
