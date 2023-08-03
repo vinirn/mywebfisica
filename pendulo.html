@@ -8,11 +8,12 @@
 <body>
     <canvas id="pendulo" width="800" height="400"></canvas>
     <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const comprimentoMetros = parseFloat(urlParams.get('comprimento')) || 2; // comprimento do braço do pêndulo em metros, ou 2 como padrão
+
         const canvas = document.getElementById('pendulo');
         const ctx = canvas.getContext('2d');
 
-        // Propriedades do pêndulo
-        const comprimentoMetros = 3.5; // comprimento do braço do pêndulo em metros
         const comprimentoPixels = comprimentoMetros * 100; // comprimento em pixels (1 metro = 100 pixels)
         const anguloInicial = 0.5; // ângulo inicial
         const aceleracaoGravidade = 9.8; // aceleração da gravidade em m/s²
